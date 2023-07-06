@@ -36,7 +36,7 @@ class Comment extends Thing implements Votable, Created {
 
   final String? parentId;
 
-  final List<Thing> replies;
+  final dynamic replies;
 
   final bool saved;
 
@@ -116,9 +116,7 @@ class Comment extends Thing implements Votable, Created {
         linkUrl = json['link_url'],
         numReports = json['num_reports'],
         parentId = json['parent_id'],
-        replies = (json['replies'] as List<Map<String, dynamic>>)
-            .map((e) => Thing.resolveThing(e) as Thing)
-            .toList(),
+        replies = json['replies'],
         saved = json['saved'],
         score = json['score'],
         subreddit = json['subreddit'],

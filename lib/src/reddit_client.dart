@@ -228,6 +228,9 @@ class RedditClient {
       if (uri.pathSegments.isNotEmpty) {
         if (uri.pathSegments.first == 'r' && uri.pathSegments.length > 1) {
           return uri.pathSegments[1];
+        } else if (uri.pathSegments.first == 'user' &&
+            uri.pathSegments.length > 1) {
+          return uri.pathSegments[1];
         } else {
           throw Exception('Not a subreddit');
         }

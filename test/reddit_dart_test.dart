@@ -100,7 +100,7 @@ void main() {
     });
 
     test('Image finding', () async {
-      var testSub = 'https://www.reddit.com/r/asiangirlsblackcocks';
+      var testSub = 'https://www.reddit.com/user/xxN1ROMxx/';
 
       final RedditClient reddit = RedditClient();
 

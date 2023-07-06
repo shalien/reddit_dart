@@ -179,8 +179,8 @@ class RedditClient {
   }
 
   String _parseInput(String input) {
-    if (input.startsWith('https://reddit.com/r') ||
-        input.startsWith(('https://www.reddit.com/r'))) {
+    if (input.startsWith('https://reddit.com/r/') ||
+        input.startsWith(('https://www.reddit.com/r/'))) {
       return input
           .replaceAll('https://reddit.com/r/', '')
           .replaceAll('https://www.reddit.com/r/', '');

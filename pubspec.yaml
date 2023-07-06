@@ -1,6 +1,6 @@
 name: reddit_dart
 description: A simple reddit api library in dart.
-version: 0.0.2
+version: 0.0.3
 # repository: https://github.com/my_org/my_repo
 
 environment:

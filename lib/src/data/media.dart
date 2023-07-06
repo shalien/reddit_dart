@@ -83,7 +83,7 @@ class Oembed {
 
   final String? type;
 
-  final String? thumbnailHeight;
+  final int? thumbnailHeight;
 
   Oembed({
     this.providerUrl,

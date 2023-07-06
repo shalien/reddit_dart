@@ -15,6 +15,43 @@ class RedditClient {
   factory RedditClient({Client? client}) =>
       _instance ??= RedditClient._(client ?? Client());
 
+  Future<Listing> get(String url, {Map<String, String> options = const {}}) {
+    if (url.contains('user')) {
+      return getUser(url, options: options);
+    } else if (url.contains('r')) {
+      return getSub(url, options: options);
+    } else {
+      throw Exception('Not a valid url');
+    }
+  }
+
+  Future<Listing> getUser(String user,
+      {Map<String, String> options = const {}}) async {
+    Uri uri = Uri.https('www.reddit.com', '/user/${_parseInput(user)}.json');
+
+    if (options.isNotEmpty) {
+      uri = uri.replace(queryParameters: options);
+    }
+
+    var response = await client.get(uri);
+
+    if (response.statusCode == 200) {
+      var decoded = jsonDecode(response.body);
+
+      if (decoded['error'] != null) {
+        throw Exception(decoded['error']);
+      }
+
+      if (decoded['kind'] != 'Listing') {
+        throw Exception('Not a listing');
+      }
+
+      return Listing.fromJson(decoded['data']);
+    } else {
+      throw Exception(response);
+    }
+  }
+
   Future<Listing> getSub(String sub,
       {Map<String, String> options = const {}}) async {
     Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}.json');

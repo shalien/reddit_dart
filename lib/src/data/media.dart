@@ -35,7 +35,7 @@ class RedditVideo {
 
   final bool? isGif;
 
-  final int? transcodingStatus;
+  final String? transcodingStatus;
 
   RedditVideo({
     this.bitrateKbps,

@@ -32,7 +32,7 @@ class Comment extends Thing implements Votable, Created {
 
   final String linkUrl;
 
-  final int numReports;
+  final int? numReports;
 
   final String? parentId;
 

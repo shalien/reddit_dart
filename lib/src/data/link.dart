@@ -74,7 +74,7 @@ class Link extends Thing implements Votable, Created {
 
   final String url;
 
-  final bool? edited;
+  final dynamic edited;
 
   final String? distinguished;
 

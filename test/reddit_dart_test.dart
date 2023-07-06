@@ -98,5 +98,39 @@ void main() {
 
       expect(parsed, 'beau_gosse');
     });
+
+    test('Image finding', () async {
+      var testSub = 'https://www.reddit.com/r/asiangirlsblackcocks';
+
+      final RedditClient reddit = RedditClient();
+
+      Listing sub = await reddit.get(testSub);
+
+      List<Link> images = sub.children
+          .where((element) => element is Link && element.linkIsImage)
+          .map((e) => e as Link)
+          .toList();
+
+      print(images.length);
+
+      expect(images.length, greaterThan(0));
+    });
+
+    test('Video finding', () async {
+      var testSub = 'https://www.reddit.com/r/asiangirlsblackcocks';
+
+      final RedditClient reddit = RedditClient();
+
+      Listing sub = await reddit.get(testSub);
+
+      List<Link> images = sub.children
+          .where((element) => element is Link && element.linkIsVideo)
+          .map((e) => e as Link)
+          .toList();
+
+      print(images.length);
+
+      expect(images.length, greaterThan(0));
+    });
   });
 }

@@ -3,6 +3,8 @@
 /// More dartdocs go here.
 library;
 
+export 'package:http/http.dart' show Response;
+
 export 'src/reddit_client.dart';
 
 export 'src/data/account.dart';

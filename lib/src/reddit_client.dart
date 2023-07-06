@@ -48,7 +48,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -75,7 +75,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -102,7 +102,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -129,7 +129,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -156,7 +156,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -183,7 +183,7 @@ class RedditClient {
 
       return Listing.fromJson(decoded['data']);
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -193,7 +193,7 @@ class RedditClient {
     if (response.statusCode == 200) {
       return response.bodyBytes;
     } else {
-      throw Exception(response);
+      throw response;
     }
   }
 
@@ -208,7 +208,7 @@ class RedditClient {
       } else if (response.statusCode == 404 || response.statusCode == 403) {
         continue;
       } else {
-        throw Exception(response);
+        throw response;
       }
     }
 

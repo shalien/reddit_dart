@@ -89,5 +89,14 @@ void main() {
 
       expect(body, isNotNull);
     });
+
+    test('Url parsing', () {
+      // Ending / is important !!
+      var test = 'https://reddit.com/r/beau_gosse/';
+
+      var parsed = RedditClient().parseInput(test);
+
+      expect(parsed, 'beau_gosse');
+    });
   });
 }

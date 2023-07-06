@@ -178,12 +178,25 @@ class RedditClient {
     throw Exception('No video found');
   }
 
+  String parseInput(String input) => _parseInput(input);
+
   String _parseInput(String input) {
-    if (input.startsWith('https://reddit.com/r/') ||
-        input.startsWith(('https://www.reddit.com/r/'))) {
-      return input
-          .replaceAll('https://reddit.com/r/', '')
-          .replaceAll('https://www.reddit.com/r/', '');
+    if (Uri.tryParse(input) != null) {
+      var uri = Uri.parse(input);
+
+      if (!uri.host.contains('reddit')) {
+        throw Exception('Not a reddit url');
+      }
+
+      if (uri.pathSegments.isNotEmpty) {
+        if (uri.pathSegments.first == 'r' && uri.pathSegments.length > 1) {
+          return uri.pathSegments[1];
+        } else {
+          throw Exception('Not a subreddit');
+        }
+      } else {
+        return input;
+      }
     } else {
       return input;
     }

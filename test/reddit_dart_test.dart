@@ -10,7 +10,7 @@ void main() {
 
       Listing sub = await reddit.getSub('beau_gosse');
 
-      expect(sub.dist, 8);
+      expect(sub.dist, 9);
     });
 
     test('Url filtering', () async {

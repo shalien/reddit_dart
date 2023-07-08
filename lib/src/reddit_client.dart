@@ -222,7 +222,7 @@ class RedditClient {
       var uri = Uri.parse(input);
 
       if (!uri.host.contains('reddit')) {
-        throw Exception('Not a reddit url');
+        return input;
       }
 
       if (uri.pathSegments.isNotEmpty) {

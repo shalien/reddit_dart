@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:reddit_dart/src/data/gallery_data.dart';
 
 import '../things/created.dart';
 import '../things/thing.dart';
@@ -86,6 +87,8 @@ class Link extends Thing implements Votable, Created {
 
   final String? postHint;
 
+  final GalleryData? galleryData;
+
   Link(id, name, kind, this._created, this._createdUtc, this._downs,
       this._likes, this._ups,
       {this.author,
@@ -114,7 +117,8 @@ class Link extends Thing implements Votable, Created {
       required this.stickied,
       required this.isGallery,
       required this.isVideo,
-      required this.postHint})
+      required this.postHint,
+      required this.galleryData})
       : super(id: id, name: name, kind: kind);
 
   Link.fromJson(Map<String, dynamic> json)
@@ -152,6 +156,9 @@ class Link extends Thing implements Votable, Created {
         isGallery = json['is_gallery'],
         isVideo = json['is_video'],
         postHint = json['post_hint'],
+        galleryData = json['gallery_data'] != null
+            ? GalleryData.fromJson(json['gallery_data'])
+            : null,
         super.fromJson(json);
 
   bool get linkIsVideo =>

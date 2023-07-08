@@ -14,6 +14,7 @@ export 'src/data/media.dart';
 export 'src/data/message.dart';
 export 'src/data/more.dart';
 export 'src/data/subreddit.dart';
+export 'src/data/gallery_data.dart';
 
 export 'src/things/created.dart';
 export 'src/things/listing.dart';

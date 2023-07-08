@@ -5,6 +5,7 @@ import '../things/created.dart';
 import '../things/thing.dart';
 import '../things/votable.dart';
 import 'media.dart';
+import 'media_metadata.dart';
 
 @immutable
 class Link extends Thing implements Votable, Created {
@@ -89,6 +90,8 @@ class Link extends Thing implements Votable, Created {
 
   final GalleryData? galleryData;
 
+  final Map<String, MediaMetadata>? mediaMetadata;
+
   Link(id, name, kind, this._created, this._createdUtc, this._downs,
       this._likes, this._ups,
       {this.author,
@@ -118,7 +121,8 @@ class Link extends Thing implements Votable, Created {
       required this.isGallery,
       required this.isVideo,
       required this.postHint,
-      required this.galleryData})
+      required this.galleryData,
+      required this.mediaMetadata})
       : super(id: id, name: name, kind: kind);
 
   Link.fromJson(Map<String, dynamic> json)
@@ -158,6 +162,11 @@ class Link extends Thing implements Votable, Created {
         postHint = json['post_hint'],
         galleryData = json['gallery_data'] != null
             ? GalleryData.fromJson(json['gallery_data'])
+            : null,
+        mediaMetadata = json['media_metadata'] != null
+            ? Map.fromEntries((json['media_metadata'] as Map<String, dynamic>)
+                .entries
+                .map((e) => MapEntry(e.key, MediaMetadata.fromJson(e.value))))
             : null,
         super.fromJson(json);
 

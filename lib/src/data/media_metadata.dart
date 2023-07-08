@@ -6,9 +6,9 @@ final class MediaMetadata {
   final String? e;
   final String? m;
 
-  final List<dynamic>? o;
-  final List<dynamic>? p;
-  final List<dynamic>? s;
+  final dynamic o;
+  final dynamic p;
+  final dynamic s;
 
   final String? id;
 

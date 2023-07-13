@@ -8,12 +8,14 @@ import 'things/listing.dart';
 class RedditClient {
   static RedditClient? _instance;
 
-  final Client client;
+  final Client _client;
 
-  RedditClient._(this.client);
+  final String appId;
 
-  factory RedditClient({Client? client}) =>
-      _instance ??= RedditClient._(client ?? Client());
+  RedditClient._(this.appId, {client}) : _client = client ?? Client();
+
+  factory RedditClient(String appId, {Client? client}) =>
+      _instance ??= RedditClient._(appId, client: client);
 
   Future<Listing> get(String url, {Map<String, String> options = const {}}) {
     if (url.contains('user')) {
@@ -33,7 +35,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -60,7 +62,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -87,7 +89,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -114,7 +116,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -141,7 +143,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -168,7 +170,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await client.get(uri);
+    var response = await _client.get(uri);
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -188,7 +190,7 @@ class RedditClient {
   }
 
   Future<Uint8List> downloadImage(String url) async {
-    var response = await client.get(Uri.parse(url));
+    var response = await _client.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -201,7 +203,7 @@ class RedditClient {
     const List<int> sizes = [360, 480, 720, 1080];
 
     for (var size in sizes) {
-      var response = await client.get(Uri.parse('$url/DASH_$size.mp4'));
+      var response = await _client.get(Uri.parse('$url/DASH_$size.mp4'));
 
       if (response.statusCode == 200) {
         return response.bodyBytes;

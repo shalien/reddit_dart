@@ -92,8 +92,8 @@ class RedditClient {
       var decoded = jsonDecode(response.body);
 
       _token = decoded['access_token'];
-      _refreshToken = DateTime.now()
-          .add(Duration(seconds: int.parse(decoded['expires_in'])));
+      _refreshToken =
+          DateTime.now().add(Duration(seconds: decoded['expires_in']));
     } else {
       throw response;
     }

@@ -93,7 +93,7 @@ class RedditClient {
 
       _token = decoded['access_token'];
       _refreshToken = DateTime.now()
-          .add(Duration(seconds: int.parse(decoded['expires_id'])));
+          .add(Duration(seconds: int.parse(decoded['expires_in'])));
     } else {
       throw response;
     }

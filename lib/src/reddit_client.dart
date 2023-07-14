@@ -12,16 +12,31 @@ class RedditClient {
 
   final Client _client;
 
+  String? _token;
+  DateTime? _refreshToken;
+
+  Future<String> get token async {
+    if (_token == null ||
+        (_refreshToken == null || DateTime.now().isAfter(_refreshToken!))) {
+      await getOauthToken();
+    }
+
+    return _token!;
+  }
+
   final String appId;
+
+  final String appSecret;
 
   int rateLimitRemaining = 0;
   int rateLimitReset = 0;
   int rateLimitUsed = 0;
 
-  RedditClient._(this.appId, {client}) : _client = client ?? Client();
+  RedditClient._(this.appId, this.appSecret, {client})
+      : _client = client ?? Client();
 
-  factory RedditClient(String appId, {Client? client}) =>
-      _instance ??= RedditClient._(appId, client: client);
+  factory RedditClient(String appId, String appSecret, {Client? client}) =>
+      _instance ??= RedditClient._(appId, appSecret, client: client);
 
   Future<Listing> get(String url, {Map<String, String> options = const {}}) {
     if (url.contains('user')) {
@@ -41,7 +56,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -60,6 +76,29 @@ class RedditClient {
     }
   }
 
+  Future<void> getOauthToken() async {
+    String basic = base64Encode(utf8.encode('$appId:$appSecret'));
+
+    Uri uri = Uri.https('www.reddit.com', '/api/v1/access_token');
+
+    var response = await _client.post(uri, body: {
+      'grant_type': 'client_credentials',
+      'deivce_id': 'DO_NOT_TRACK_THIS_DEVICE'
+    }, headers: {
+      'Authorization': 'Basic $basic'
+    });
+
+    if (response.statusCode == 200) {
+      var decoded = jsonDecode(response.body);
+
+      _token = decoded['access_token'];
+      _refreshToken = DateTime.now()
+          .add(Duration(seconds: int.parse(decoded['expires_id'])));
+    } else {
+      throw response;
+    }
+  }
+
   Future<Listing> getSub(String sub,
       {Map<String, String> options = const {}}) async {
     Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}.json');
@@ -68,7 +107,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -95,7 +135,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -122,7 +163,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -149,7 +191,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -176,7 +219,8 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(_client.get(uri));
+    var response = await _checkRateLimit(
+        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -196,7 +240,8 @@ class RedditClient {
   }
 
   Future<Uint8List> downloadImage(String url) async {
-    var response = await _checkRateLimit(_client.get(Uri.parse(url)));
+    var response = await _checkRateLimit(_client.get(Uri.parse(url),
+        headers: {'Authorization': 'bearer ${await token}'}));
 
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -209,8 +254,9 @@ class RedditClient {
     const List<int> sizes = [360, 480, 720, 1080];
 
     for (var size in sizes) {
-      var response =
-          await _checkRateLimit(_client.get(Uri.parse('$url/DASH_$size.mp4')));
+      var response = await _checkRateLimit(_client.get(
+          Uri.parse('$url/DASH_$size.mp4'),
+          headers: {'Authorization': 'bearer ${await token}'}));
 
       if (response.statusCode == 200) {
         return response.bodyBytes;

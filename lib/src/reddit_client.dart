@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
@@ -11,6 +13,10 @@ class RedditClient {
   final Client _client;
 
   final String appId;
+
+  int rateLimitRemaining = 0;
+  int rateLimitReset = 0;
+  int rateLimitUsed = 0;
 
   RedditClient._(this.appId, {client}) : _client = client ?? Client();
 
@@ -35,7 +41,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -62,7 +68,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -89,7 +95,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -116,7 +122,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -143,7 +149,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -170,7 +176,7 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _client.get(uri);
+    var response = await _checkRateLimit(_client.get(uri));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -190,7 +196,7 @@ class RedditClient {
   }
 
   Future<Uint8List> downloadImage(String url) async {
-    var response = await _client.get(Uri.parse(url));
+    var response = await _checkRateLimit(_client.get(Uri.parse(url)));
 
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -203,7 +209,8 @@ class RedditClient {
     const List<int> sizes = [360, 480, 720, 1080];
 
     for (var size in sizes) {
-      var response = await _client.get(Uri.parse('$url/DASH_$size.mp4'));
+      var response =
+          await _checkRateLimit(_client.get(Uri.parse('$url/DASH_$size.mp4')));
 
       if (response.statusCode == 200) {
         return response.bodyBytes;
@@ -242,5 +249,26 @@ class RedditClient {
     } else {
       return input;
     }
+  }
+
+  void updateRateLimit(Response response) {
+    if (response.headers['x-ratelimit-remaining'] != null) {
+      rateLimitRemaining =
+          int.parse(response.headers['x-ratelimit-remaining']!);
+    }
+
+    if (response.headers['x-ratelimit-reset'] != null) {
+      rateLimitReset = int.parse(response.headers['x-ratelimit-reset']!);
+    }
+
+    if (response.headers['x-ratelimit-used'] != null) {
+      rateLimitUsed = int.parse(response.headers['x-ratelimit-used']!);
+    }
+  }
+
+  Future<Response> _checkRateLimit(Future<Response> callback) async {
+    return Future.delayed(
+        Duration(seconds: rateLimitReset + Random.secure().nextInt(10)),
+        () => callback);
   }
 }

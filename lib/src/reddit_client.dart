@@ -50,7 +50,7 @@ class RedditClient {
 
   Future<Listing> getUser(String user,
       {Map<String, String> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/user/${_parseInput(user)}.json');
+    Uri uri = Uri.https('oauth.reddit.com', '/user/${_parseInput(user)}');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);
@@ -101,7 +101,7 @@ class RedditClient {
 
   Future<Listing> getSub(String sub,
       {Map<String, String> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}.json');
+    Uri uri = Uri.https('oauth.reddit.com', '/r/${_parseInput(sub)}.json');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);
@@ -129,7 +129,7 @@ class RedditClient {
 
   Future<Listing> getSubByBest(String sub,
       {Map<String, dynamic> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}/best.json');
+    Uri uri = Uri.https('oauth.reddit.com', '/r/${_parseInput(sub)}/best');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);
@@ -157,7 +157,7 @@ class RedditClient {
 
   Future<Listing> getSubByHot(String sub,
       {Map<String, dynamic> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}/hot.json');
+    Uri uri = Uri.https('oauth.reddit.com', '/r/${_parseInput(sub)}/hot.json');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);
@@ -185,7 +185,7 @@ class RedditClient {
 
   Future<Listing> getSubByNew(String sub,
       {Map<String, dynamic> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}/new.json');
+    Uri uri = Uri.https('oauth.reddit.com', '/r/${_parseInput(sub)}/new.json');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);
@@ -213,7 +213,8 @@ class RedditClient {
 
   Future<Listing> getSubByRising(String sub,
       {Map<String, dynamic> options = const {}}) async {
-    Uri uri = Uri.https('www.reddit.com', '/r/${_parseInput(sub)}/rising.json');
+    Uri uri =
+        Uri.https('oauth.reddit.com', '/r/${_parseInput(sub)}/rising.json');
 
     if (options.isNotEmpty) {
       uri = uri.replace(queryParameters: options);

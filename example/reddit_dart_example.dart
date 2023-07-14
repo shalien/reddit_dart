@@ -1,7 +1,10 @@
 import 'package:reddit_dart/reddit_dart.dart';
 
 Future<void> main() async {
-  final RedditClient reddit = RedditClient();
+  const REDDIT_APP_ID = '';
+  const REDDIT_APP_SECRET = '';
+
+  final RedditClient reddit = RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
 
   Listing sub = await reddit.getSub('beau_gosse');
 

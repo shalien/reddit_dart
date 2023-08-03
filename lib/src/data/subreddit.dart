@@ -3,7 +3,7 @@ import '../things/thing.dart';
 
 @immutable
 class Subreddit extends Thing {
-  final int accountsActive;
+  final int? accountsActive;
   final int commentScoreHideMins;
   final String description;
   final String descriptionHtml;

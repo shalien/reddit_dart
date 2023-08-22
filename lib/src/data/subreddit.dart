@@ -5,7 +5,7 @@ import '../things/thing.dart';
 class Subreddit extends Thing {
   final num? accountsActive;
   final num? commentScoreHideMins;
-  final String description;
+  final String? description;
   final String descriptionHtml;
   final String displayName;
   final String? headerImg;
@@ -67,7 +67,7 @@ class Subreddit extends Thing {
         over18 = json['over18'],
         publicDescription = json['public_description'],
         publicTraffic = json['public_traffic'],
-        subscribers = json['subscribers'],
+        subscribers = double.parse(json['subscribers']),
         submissionType = json['submission_type'],
         submitLinkLabel = json['submit_link_label'],
         submitTextLabel = json['submit_text_label'],

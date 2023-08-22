@@ -60,9 +60,7 @@ class Subreddit extends Thing {
         descriptionHtml = json['description_html'],
         displayName = json['display_name'],
         headerImg = json['header_img'],
-        headerSize = (json['header_size'] as List<dynamic>)
-            .map((e) => e as int)
-            .toList(),
+        headerSize = null,
         headerTitle = json['header_title'],
         over18 = json['over18'],
         publicDescription = json['public_description'],

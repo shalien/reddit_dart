@@ -23,7 +23,7 @@ class Subreddit extends Thing {
   final String url;
   final bool? userIsBanned;
   final bool? userIsContributor;
-  final bool userIsModerator;
+  final bool? userIsModerator;
   final bool userIsSubscriber;
 
   Subreddit({

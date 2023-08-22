@@ -6,7 +6,7 @@ class Subreddit extends Thing {
   final num? accountsActive;
   final num? commentScoreHideMins;
   final String? description;
-  final String descriptionHtml;
+  final String? descriptionHtml;
   final String displayName;
   final String? headerImg;
   final List<int> headerSize;
@@ -14,7 +14,7 @@ class Subreddit extends Thing {
   final bool over18;
   final String publicDescription;
   final bool publicTraffic;
-  final double subscribers;
+  final num subscribers;
   final String submissionType;
   final String submitLinkLabel;
   final String submitTextLabel;
@@ -67,7 +67,7 @@ class Subreddit extends Thing {
         over18 = json['over18'],
         publicDescription = json['public_description'],
         publicTraffic = json['public_traffic'],
-        subscribers = json['subscribers'] as double,
+        subscribers = json['subscribers'],
         submissionType = json['submission_type'],
         submitLinkLabel = json['submit_link_label'],
         submitTextLabel = json['submit_text_label'],

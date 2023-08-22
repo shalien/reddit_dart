@@ -67,7 +67,7 @@ class Subreddit extends Thing {
         over18 = json['over18'],
         publicDescription = json['public_description'],
         publicTraffic = json['public_traffic'],
-        subscribers = double.parse(json['subscribers']),
+        subscribers = json['subscribers'] as double,
         submissionType = json['submission_type'],
         submitLinkLabel = json['submit_link_label'],
         submitTextLabel = json['submit_text_label'],

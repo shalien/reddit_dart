@@ -11,7 +11,7 @@ class Subreddit extends Thing {
   final String? headerImg;
   final List<int>? headerSize;
   final String? headerTitle;
-  final bool over18;
+  final bool? over18;
   final String publicDescription;
   final bool publicTraffic;
   final num subscribers;

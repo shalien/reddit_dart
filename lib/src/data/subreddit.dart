@@ -9,7 +9,7 @@ class Subreddit extends Thing {
   final String? descriptionHtml;
   final String displayName;
   final String? headerImg;
-  final List<int> headerSize;
+  final List<int>? headerSize;
   final String headerTitle;
   final bool over18;
   final String publicDescription;

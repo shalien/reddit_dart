@@ -14,7 +14,7 @@ class Subreddit extends Thing {
   final bool? over18;
   final String publicDescription;
   final bool? publicTraffic;
-  final num subscribers;
+  final num? subscribers;
   final String submissionType;
   final String submitLinkLabel;
   final String submitTextLabel;

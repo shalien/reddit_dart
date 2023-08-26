@@ -17,7 +17,7 @@ class Subreddit extends Thing {
   final num? subscribers;
   final String? submissionType;
   final String? submitLinkLabel;
-  final String submitTextLabel;
+  final String? submitTextLabel;
   final String subredditType;
   final String title;
   final String url;

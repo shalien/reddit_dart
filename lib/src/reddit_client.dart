@@ -12,9 +12,7 @@ class RedditClient {
 
   final Client _client;
 
-  final String username;
-
-  String userAgent;
+  String userAgent = 'reddit_dart:v2.0.1 (by u/shalien93)';
 
   String? _token;
   DateTime? _refreshToken;
@@ -36,15 +34,11 @@ class RedditClient {
   int rateLimitReset = 0;
   int rateLimitUsed = 0;
 
-  RedditClient._(this.appId, this.appSecret, this.username,
-      {this.userAgent = 'reddit_dart:v2.0.1 (by u/shalieb93)', client})
+  RedditClient._(this.appId, this.appSecret, {client})
       : _client = client ?? Client();
 
-  factory RedditClient(String appId, String appSecret, String username,
-          {String userAgent = 'reddit_dart:v2.0.1 (by u/shalieb93)',
-          Client? client}) =>
-      _instance ??= RedditClient._(appId, appSecret, username,
-          userAgent: userAgent, client: client);
+  factory RedditClient(String appId, String appSecret, {Client? client}) =>
+      _instance ??= RedditClient._(appId, appSecret, client: client);
 
   Future<Listing> get(String url, {Map<String, String> options = const {}}) {
     if (url.contains('user')) {

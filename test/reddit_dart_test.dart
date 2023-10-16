@@ -6,11 +6,11 @@ import 'package:test/test.dart';
 void main() {
   group('A group of tests', () {
     test('Get Beau Gosse Modhash', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSub('beau_gosse');
 
@@ -18,11 +18,11 @@ void main() {
     });
 
     test('Url filtering', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSub('https://www.reddit.com/r/beau_gosse');
 
@@ -30,11 +30,11 @@ void main() {
     });
 
     test('Get by new', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSubByNew('beau_gosse');
 
@@ -42,11 +42,11 @@ void main() {
     });
 
     test('Select where is gallery', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSub('beau_gosse');
 
@@ -57,11 +57,11 @@ void main() {
     });
 
     test('Download image', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSub('test_bg');
 
@@ -85,11 +85,11 @@ void main() {
     });
 
     test('Download video', () async {
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.getSub('test_bg');
 
@@ -118,11 +118,11 @@ void main() {
       // Ending / is important !!
       var test = 'https://reddit.com/r/beau_gosse/';
 
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       var parsed = reddit.parseInput(test);
 
@@ -132,11 +132,11 @@ void main() {
     test('Image finding', () async {
       var testSub = 'https://www.reddit.com/user/xxN1ROMxx/';
 
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.get(testSub);
 
@@ -153,11 +153,11 @@ void main() {
     test('Video finding', () async {
       var testSub = 'https://www.reddit.com/r/asiangirlsblackcocks';
 
-      const REDDIT_APP_ID = 'cbJKqzlZ8soXvU_tvP5KWw';
-      const REDDIT_APP_SECRET = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
+      const redditAppId = 'cbJKqzlZ8soXvU_tvP5KWw';
+      const redditAppSecret = '0NfZpOoAOScSyDMiEjgh4Uwe0yp5Hw';
 
       final RedditClient reddit =
-          RedditClient(REDDIT_APP_ID, REDDIT_APP_SECRET);
+          RedditClient(redditAppId, redditAppSecret);
 
       Listing sub = await reddit.get(testSub);
 

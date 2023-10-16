@@ -12,6 +12,10 @@ class RedditClient {
 
   final Client _client;
 
+  final String username;
+
+  String userAgent;
+
   String? _token;
   DateTime? _refreshToken;
 
@@ -32,11 +36,15 @@ class RedditClient {
   int rateLimitReset = 0;
   int rateLimitUsed = 0;
 
-  RedditClient._(this.appId, this.appSecret, {client})
+  RedditClient._(this.appId, this.appSecret, this.username,
+      {this.userAgent = 'reddit_dart:v2.0.1 (by u/shalieb93)', client})
       : _client = client ?? Client();
 
-  factory RedditClient(String appId, String appSecret, {Client? client}) =>
-      _instance ??= RedditClient._(appId, appSecret, client: client);
+  factory RedditClient(String appId, String appSecret, String username,
+          {String userAgent = 'reddit_dart:v2.0.1 (by u/shalieb93)',
+          Client? client}) =>
+      _instance ??= RedditClient._(appId, appSecret, username,
+          userAgent: userAgent, client: client);
 
   Future<Listing> get(String url, {Map<String, String> options = const {}}) {
     if (url.contains('user')) {
@@ -56,8 +64,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -85,7 +95,8 @@ class RedditClient {
       'grant_type': 'client_credentials',
       'deivce_id': 'DO_NOT_TRACK_THIS_DEVICE'
     }, headers: {
-      'Authorization': 'Basic $basic'
+      'Authorization': 'Basic $basic',
+      'User-Agent': userAgent
     });
 
     if (response.statusCode == 200) {
@@ -107,8 +118,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -135,8 +148,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -163,8 +178,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -191,8 +208,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -220,8 +239,10 @@ class RedditClient {
       uri = uri.replace(queryParameters: options);
     }
 
-    var response = await _checkRateLimit(
-        _client.get(uri, headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(uri, headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -241,8 +262,10 @@ class RedditClient {
   }
 
   Future<Uint8List> downloadImage(String url) async {
-    var response = await _checkRateLimit(_client.get(Uri.parse(url),
-        headers: {'Authorization': 'bearer ${await token}'}));
+    var response = await _checkRateLimit(_client.get(Uri.parse(url), headers: {
+      'Authorization': 'bearer ${await token}',
+      'User-Agent': userAgent
+    }));
 
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -255,9 +278,11 @@ class RedditClient {
     const List<int> sizes = [360, 480, 720, 1080];
 
     for (var size in sizes) {
-      var response = await _checkRateLimit(_client.get(
-          Uri.parse('$url/DASH_$size.mp4'),
-          headers: {'Authorization': 'bearer ${await token}'}));
+      var response = await _checkRateLimit(_client
+          .get(Uri.parse('$url/DASH_$size.mp4'), headers: {
+        'Authorization': 'bearer ${await token}',
+        'User-Agent': userAgent
+      }));
 
       if (response.statusCode == 200) {
         return response.bodyBytes;
